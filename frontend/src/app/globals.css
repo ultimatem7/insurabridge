@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light theme - Clean, professional, inspired by Linear */
+    --background: 0 0% 100%;
+    --background-secondary: 210 20% 98%;
+    --background-tertiary: 210 20% 96%;
+    
+    --foreground: 220 20% 10%;
+    --foreground-secondary: 220 10% 30%;
+    --foreground-muted: 220 10% 50%;
+    
+    --border: 220 10% 90%;
+    --border-secondary: 220 10% 85%;
+    
+    --accent: 220 90% 56%;
+    --accent-foreground: 0 0% 100%;
+    
+    --success: 145 65% 42%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    
+    --danger: 0 72% 51%;
+    --danger-foreground: 0 0% 100%;
+  }
+
+  .dark {
+    /* Dark theme - Rich, sophisticated, like Linear's dark mode */
+    --background: 222 47% 6%;
+    --background-secondary: 222 47% 8%;
+    --background-tertiary: 222 47% 11%;
+    
+    --foreground: 210 40% 98%;
+    --foreground-secondary: 215 20% 75%;
+    --foreground-muted: 215 20% 55%;
+    
+    --border: 215 20% 18%;
+    --border-secondary: 215 20% 22%;
+    
+    --accent: 220 85% 60%;
+    --accent-foreground: 0 0% 100%;
+    
+    --success: 145 60% 50%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 0%;
+    
+    --danger: 0 72% 55%;
+    --danger-foreground: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-border-secondary;
+  }
+}
+
+@layer components {
+  /* Button variants */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-primary {
+    @apply btn bg-accent text-accent-foreground hover:brightness-110 shadow-sm;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-background-tertiary text-foreground hover:bg-border border border-border;
+  }
+  
+  .btn-ghost {
+    @apply btn bg-transparent text-foreground-secondary hover:bg-background-tertiary hover:text-foreground;
+  }
+  
+  .btn-danger {
+    @apply btn bg-danger text-danger-foreground hover:brightness-110;
+  }
+  
+  /* Card */
+  .card {
+    @apply bg-background-secondary border border-border rounded-xl p-6;
+  }
+  
+  /* Input */
+  .input {
+    @apply w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all;
+  }
+  
+  /* Badge variants */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+  
+  .badge-success {
+    @apply badge bg-success/15 text-success;
+  }
+  
+  .badge-warning {
+    @apply badge bg-warning/15 text-warning;
+  }
+  
+  .badge-danger {
+    @apply badge bg-danger/15 text-danger;
+  }
+  
+  .badge-neutral {
+    @apply badge bg-foreground-muted/15 text-foreground-secondary;
+  }
+  
+  .badge-accent {
+    @apply badge bg-accent/15 text-accent;
+  }
+  
+  /* Confidence indicators */
+  .confidence-high {
+    @apply text-success;
+  }
+  
+  .confidence-medium {
+    @apply text-warning;
+  }
+  
+  .confidence-low {
+    @apply text-danger;
+  }
+}
+
+/* Loading spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid hsl(var(--border));
+  border-top-color: hsl(var(--accent));
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, hsl(var(--accent)), hsl(220 85% 75%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass effect */
+.glass {
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
