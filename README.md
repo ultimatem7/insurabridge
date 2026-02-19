@@ -1,359 +1,358 @@
-# Insurabridge
+# Insurabridge - Healthcare Claims Automation Platform
 
-**AI Health Insurance Intelligence Platform**
-
-[![HIPAA Compliant](https://img.shields.io/badge/HIPAA-Compliant-green.svg)]()
-[![Local First](https://img.shields.io/badge/PHI-Local%20Only-blue.svg)]()
-[![EPIC Ready](https://img.shields.io/badge/EPIC-App%20Orchard-purple.svg)]()
+**Production-Grade Web Application for EHR-Integrated Insurance Claim Generation**
 
 ---
 
-## What is Insurabridge?
+## 🎯 What This Is
 
-Insurabridge is a HIPAA-compliant, locally-hosted AI platform that transforms how healthcare providers handle insurance claims. Unlike cloud-based solutions, **all PHI processing happens on your device** - no data ever leaves your system.
+A **HIPAA-conscious web application** that automates insurance claim generation from EHR (Electronic Health Record) data. Designed for on-premise hospital deployment.
 
-### Core Capabilities
+### Key Features
 
-🏥 **Claim Generation**
-- Upload clinical documentation (PDF, DOCX, or text)
-- AI extracts diagnoses and procedures
-- Suggests ICD-10, CPT, and HCPCS codes
-- Every code backed by cited evidence
-
-⚠️ **Denial Management**
-- Classify denial reasons automatically
-- Assess appeal likelihood
-- Generate professional appeal letters
-- Track appeal outcomes
-
-🛡️ **Audit Defense**
-- Pre-submission risk scoring
-- NCCI bundling checks
-- MUE limit validation
-- Compliance issue detection
-
-📊 **Explainable AI**
-- Full reasoning chains for every decision
-- Source citations required
-- Confidence scoring
-- No black boxes
+- ✅ **Multi-EHR Authentication** - OAuth2/SMART on FHIR (Epic, Cerner, etc.)
+- ✅ **FHIR R4 Integration** - Extract patient, encounter, and clinical data
+- ✅ **AI-Powered Claim Generation** - Local LLM processes clinical notes
+- ✅ **Evidence-Based** - Every code linked to supporting documentation
+- ✅ **HIPAA Compliant** - All PHI stays on-premise
+- ✅ **Docker Deployment** - One-command setup
 
 ---
 
-## Why Insurabridge?
+## 📁 Project Structure
 
-### The Problem
-
-Healthcare providers lose **$262 billion annually** to claim denials. Current solutions are either:
-- **Cloud-based** → PHI exposure risk, compliance concerns
-- **Rule-based** → Rigid, can't handle nuance
-- **Manual** → Slow, inconsistent, expensive
-
-### Our Solution
-
-| Feature | Traditional | Cloud AI | Insurabridge |
-|---------|-------------|----------|-------------|
-| PHI Security | ⚠️ On-premise | ❌ Cloud exposure | ✅ Local only |
-| AI Intelligence | ❌ Rules only | ✅ LLM-powered | ✅ LLM-powered |
-| Explainability | ⚠️ Limited | ❌ Black box | ✅ Full citations |
-| HIPAA Compliance | ✅ Depends | ⚠️ BAA required | ✅ By design |
-| Cost | 💰💰💰 | 💰💰 | 💰 |
+```
+insurabridge/
+├── claim-web-app/              # Main web application
+│   ├── backend/                # FastAPI backend
+│   ├── frontend/               # React frontend (to be built)
+│   ├── docker-compose.yml      # Service orchestration
+│   └── README.md               # Detailed documentation
+│
+├── Insurabridge/demo-backend/  # Demo/testing backend
+└── README.md                   # This file
+```
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Python 3.11+**
-- **Node.js 18+**
-- **Ollama** with Gemma model
-- **16GB RAM** (recommended)
+- Docker Desktop
+- EHR provider credentials (Epic/Cerner) OR use mock mode
 
-### 1. Install Ollama and Gemma
+### Run the Application
 
 ```bash
-# Install Ollama (https://ollama.ai)
-# Then pull the Gemma model (4B is the default):
-ollama pull gemma:4b
+cd claim-web-app
+./quick-start.sh
 ```
 
-### 2. Start the Backend
+This will:
+- Start PostgreSQL database
+- Start Redis (session storage)
+- Start FastAPI backend
+- Show you the API documentation URL
 
-```bash
-cd Insurabridge/backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # or `venv\Scripts\activate` on Windows
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the server
-python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
-```
-
-### 3. Start the Frontend
-
-```bash
-cd Insurabridge/frontend
-
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-```
-
-### 4. Open the Application
-
-Navigate to **http://localhost:3000**
+**Access Points:**
+- API Documentation: http://localhost:8000/docs
+- Backend API: http://localhost:8000
+- Health Check: http://localhost:8000/health
 
 ---
 
-## Architecture
+## 📖 Full Documentation
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         User's Device                            │
-│                                                                   │
-│   ┌─────────────┐    ┌─────────────┐    ┌─────────────────────┐ │
-│   │   Browser   │───▶│  Frontend   │───▶│      Backend        │ │
-│   │             │    │  (Next.js)  │    │     (FastAPI)       │ │
-│   └─────────────┘    └─────────────┘    └──────────┬──────────┘ │
-│                                                     │            │
-│   ┌─────────────────────────────────────────────────▼──────────┐│
-│   │                    Core Services                            ││
-│   │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   ││
-│   │  │ Ingestion│  │Reasoning │  │ Knowledge│  │ Security │   ││
-│   │  │  Layer   │  │  Engine  │  │   Base   │  │  Layer   │   ││
-│   │  └──────────┘  └──────────┘  └──────────┘  └──────────┘   ││
-│   └─────────────────────────────────────────────────────────────┘│
-│                                  │                               │
-│                           ┌──────▼──────┐                        │
-│                           │   Ollama    │                        │
-│                           │  (Gemma 4B) │                        │
-│                           └─────────────┘                        │
-│                                                                   │
-│   🔒 All PHI encrypted at rest with AES-256-GCM                 │
-│   🔒 No external API calls - everything runs locally             │
-└─────────────────────────────────────────────────────────────────┘
+Complete documentation is in the **claim-web-app/** folder:
+
+- **claim-web-app/README.md** - Project overview
+- **claim-web-app/DEPLOYMENT.md** - Complete deployment guide
+- **claim-web-app/PROJECT_SUMMARY.md** - Technical deep-dive
+
+---
+
+## 🔧 Development Setup
+
+```bash
+cd claim-web-app
+
+# Copy configuration
+cp .env.example .env
+
+# Edit with your settings
+nano .env
+
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f backend
+
+# Stop services
+docker-compose down
 ```
 
 ---
 
-## Features
+## 🏥 How It Works
 
-### Claim Generation
+### 1. Authentication
+User authenticates with their EHR system (Epic, Cerner, etc.) using OAuth2
 
-1. **Upload Documentation**
-   - Drag & drop clinical notes, discharge summaries, or operative reports
-   - Supports PDF (with OCR), DOCX, and plain text
+### 2. Data Extraction
+System fetches FHIR resources:
+- Patient demographics
+- Encounter details
+- Conditions (diagnoses)
+- Procedures
+- Clinical notes
+- Lab results
 
-2. **AI Analysis**
-   - Extracts diagnoses and procedures
-   - Maps to ICD-10-CM, CPT, HCPCS codes
-   - Validates medical necessity
-   - Checks bundling rules
+### 3. Claim Generation
+Local LLM processes clinical data and generates:
+- ICD-10 diagnosis codes
+- CPT/HCPCS procedure codes
+- Evidence citations
+- Confidence scores
 
-3. **Review & Submit**
-   - Every code shows supporting evidence
-   - Confidence scores highlight uncertain items
-   - Human approval required before submission
-
-### Denial Appeals
-
-1. **Record Denial**
-   - Enter denial code and reason
-   - AI classifies the denial category
-
-2. **Analyze & Strategize**
-   - Root cause identification
-   - Policy reference matching
-   - Appeal success prediction
-
-3. **Generate Appeal**
-   - Professional letter with citations
-   - Policy-specific arguments
-   - Supporting documentation list
-
-### Audit Protection
-
-- **Pre-submission scanning** for compliance issues
-- **NCCI edit checking** between all code pairs
-- **MUE limit validation**
-- **Documentation gap detection**
-- **Risk scoring** for audit likelihood
+### 4. Review & Export
+Claims are presented for human review before submission
 
 ---
 
-## Security
+## 🔒 Security & Compliance
 
 ### HIPAA Compliance
+- ✅ All data processing on-premise
+- ✅ Encrypted database connections
+- ✅ Audit logging for all PHI access
+- ✅ Session timeouts (15 minutes)
+- ✅ No external API calls with PHI
 
-| Requirement | Implementation |
-|-------------|----------------|
-| Access Control | Role-based (Admin, Billing, Coder, Auditor, Viewer) |
-| Audit Logs | Immutable, cryptographically chained |
-| Encryption | AES-256-GCM at rest, TLS in transit |
-| Authentication | Argon2id hashing, JWT tokens |
-| Session | 15-minute timeout, automatic logout |
-
-### Data Protection
-
-- **Zero external calls** - All AI inference runs locally
-- **Encrypted database** - SQLCipher (AES-256)
-- **No PHI in logs** - Sensitive data hashed
-- **Secure deletion** - Memory cleared after use
-
-### Audit Trail
-
-Every action is logged with:
-- User identity
-- Timestamp
-- Resource affected
-- Action taken
-- Cryptographic chain link
+### Security Features
+- JWT token authentication
+- OAuth2 with PKCE (for Epic)
+- Password hashing (bcrypt)
+- SQL injection prevention
+- CORS configuration
+- Security headers
 
 ---
 
-## Project Structure
+## 📊 API Endpoints
 
-```
-Insurabridge/
-├── backend/
-│   ├── app/
-│   │   ├── api/           # REST endpoints
-│   │   ├── core/          # Security, DB, LLM
-│   │   ├── ingestion/     # FHIR, document parsing
-│   │   └── reasoning/     # AI reasoning engine
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   │   ├── app/           # Next.js pages
-│   │   └── lib/           # API client, state
-│   └── package.json
-├── docs/
-│   ├── ARCHITECTURE.md
-│   ├── SECURITY.md
-│   ├── PROMPTS.md
-│   ├── DATA_SCHEMAS.md
-│   └── MVP_ROADMAP.md
-└── README.md
+### Authentication
+- `GET /auth/providers` - List available EHR providers
+- `GET /auth/{provider}/login` - Initiate OAuth flow
+- `GET /auth/{provider}/callback` - OAuth callback
+- `POST /auth/logout` - End session
+
+### FHIR Resources
+- `GET /fhir/patients` - Get current patient
+- `GET /fhir/encounters` - List patient encounters
+- `GET /fhir/encounters/{id}` - Get encounter details
+- `GET /fhir/conditions` - List diagnoses
+- `GET /fhir/procedures` - List procedures
+
+### Claims
+- `POST /claims/generate` - Generate claim from encounter
+- `GET /claims/{id}` - Retrieve claim
+- `GET /claims` - List claims
+- `POST /claims/{id}/export` - Export claim
+
+### Health
+- `GET /health` - Basic health check
+- `GET /health/ready` - Comprehensive readiness check
+
+Full API documentation: http://localhost:8000/docs
+
+---
+
+## 🎓 Technology Stack
+
+### Backend
+- **Python 3.11** - Runtime
+- **FastAPI** - Web framework
+- **SQLAlchemy 2.0** - Async ORM
+- **PostgreSQL** - Database
+- **Redis** - Session storage
+- **HTTPX** - Async HTTP client
+
+### EHR Integration
+- **SMART on FHIR** - OAuth2 authentication
+- **FHIR R4** - Healthcare data standard
+- **Epic SDK** - Epic integration
+- **Cerner SDK** - Cerner integration
+
+### Infrastructure
+- **Docker** - Containerization
+- **Docker Compose** - Service orchestration
+- **Nginx** - Reverse proxy (production)
+
+---
+
+## 🧪 Testing
+
+```bash
+cd claim-web-app
+
+# View API documentation (interactive testing)
+open http://localhost:8000/docs
+
+# Test health
+curl http://localhost:8000/health
+
+# List EHR providers
+curl http://localhost:8000/auth/providers
+
+# Check all systems
+curl http://localhost:8000/health/ready
 ```
 
 ---
 
-## Configuration
+## 🚢 Production Deployment
+
+### 1. Configure Environment
+
+```bash
+cd claim-web-app
+cp .env.example .env
+```
+
+Edit `.env` with production values:
+- Secure secrets
+- Database credentials
+- EHR provider OAuth credentials
+- LLM service URL
+
+### 2. Deploy with Docker
+
+```bash
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+### 3. Configure SSL/TLS
+
+Use nginx reverse proxy with Let's Encrypt certificates.
+
+### 4. Set Up Monitoring
+
+- Health checks: `/health/ready`
+- Logs: `docker-compose logs -f`
+- Metrics: Prometheus/Grafana (optional)
+
+See **claim-web-app/DEPLOYMENT.md** for complete instructions.
+
+---
+
+## 🔧 Configuration
 
 ### Environment Variables
 
-```bash
-# Backend (.env)
-ENVIRONMENT=development
-DEBUG=true
-DB_ENCRYPTION_KEY=your-32-byte-encryption-key
-SECRET_KEY=your-32-byte-secret-key
-OLLAMA_HOST=http://localhost:11434
-OLLAMA_MODEL=gemma:4b
-```
+Key configuration in `.env`:
 
-### Changing the LLM
+```env
+# Application
+ENVIRONMENT=production
+DEBUG=false
+SECRET_KEY=<your-secret-key>
 
-Insurabridge supports any Ollama-compatible model:
+# Database
+DATABASE_URL=postgresql://user:pass@localhost:5432/claims_db
 
-```bash
-# Use a different model
-OLLAMA_MODEL=llama2:13b
+# Epic EHR
+EPIC_CLIENT_ID=your_epic_client_id
+EPIC_CLIENT_SECRET=your_epic_secret
+EPIC_REDIRECT_URI=http://localhost:8000/auth/epic/callback
 
-# Or a quantized version for lower resources
-OLLAMA_MODEL=gemma:2b
-```
+# Local LLM
+LLM_SERVICE_URL=http://localhost:8001
 
----
-
-## Development
-
-### Running Tests
-
-```bash
-cd backend
-pytest --cov=app tests/
-```
-
-### Code Quality
-
-```bash
-# Linting
-ruff check .
-
-# Type checking
-mypy app/
-
-# Formatting
-black .
+# Security
+SESSION_TIMEOUT_MINUTES=15
+CORS_ORIGINS=http://localhost:3000
 ```
 
 ---
 
-## Roadmap
+## 📈 Roadmap
 
-### Now (MVP)
-- ✅ Claim generation from clinical notes
-- ✅ ICD-10, CPT, HCPCS code mapping
-- ✅ Denial classification and appeal generation
-- ✅ Basic compliance checking
-- ✅ Audit logging
+### ✅ Completed (MVP)
+- Multi-provider OAuth2 authentication
+- FHIR R4 data extraction
+- Claim generation pipeline
+- Database models and persistence
+- Security middleware
+- Audit logging
+- Docker deployment
 
-### Next (Q2 2024)
-- [ ] EPIC App Orchard certification
-- [ ] UB-04 institutional claims
-- [ ] Multi-payer policy database
-- [ ] Prior authorization workflow
+### 🔄 In Progress
+- React frontend UI
+- CMS-1500 export format
+- Claim editing workflow
 
-### Future (Q3-Q4 2024)
-- [ ] Practice management integrations
-- [ ] Denial prediction before submission
-- [ ] CDI (Clinical Documentation Improvement)
-- [ ] Revenue cycle analytics
-
----
-
-## FAQ
-
-**Q: Is my data sent to the cloud?**
-> No. All processing happens locally on your device. Insurabridge never makes external API calls for inference.
-
-**Q: What hardware do I need?**
-> Minimum: 16GB RAM, 8-core CPU. Recommended: 32GB RAM, modern CPU, GPU optional (speeds up inference).
-
-**Q: Can I use a different AI model?**
-> Yes. Any Ollama-compatible model works. Larger models (13B+) may improve accuracy but require more resources.
-
-**Q: Is this HIPAA compliant?**
-> Yes. The architecture is designed for HIPAA compliance: local-only processing, encrypted storage, audit logging, access controls.
-
-**Q: How accurate is the coding?**
-> In testing, Insurabridge achieves 90%+ agreement with certified coders. All suggestions require human review.
+### 📋 Planned
+- Additional EHR providers (Athenahealth, Meditech, eClinicalWorks)
+- X12 837 EDI generation
+- Claim submission tracking
+- Analytics dashboard
+- User management UI
+- Multi-payer policy database
 
 ---
 
-## License
+## 🆘 Support & Troubleshooting
 
-Proprietary - All Rights Reserved
+### Common Issues
 
-For licensing inquiries, contact: [licensing@sentinelrcm.com]
+**Services won't start:**
+```bash
+docker-compose logs -f backend
+docker-compose restart
+```
+
+**Database connection failed:**
+```bash
+docker-compose logs postgres
+docker-compose exec postgres psql -U claims_user -d claims_db
+```
+
+**OAuth redirect not working:**
+- Verify redirect URI matches exactly in EHR provider settings
+- Check CORS_ORIGINS in .env
+
+### Get Help
+
+- Check API docs: http://localhost:8000/docs
+- View logs: `docker-compose logs -f`
+- Read: claim-web-app/DEPLOYMENT.md
+- Review: claim-web-app/PROJECT_SUMMARY.md
 
 ---
 
-## Support
+## 📝 License
 
-- **Documentation**: See `/docs` folder
-- **Issues**: File on GitHub
-- **Enterprise**: Contact for dedicated support
+Proprietary - For authorized use only
 
 ---
 
-*Built with ❤️ for healthcare providers who deserve better tools.*
+## 🙏 Credits
 
+Built for healthcare providers who deserve better tools.
+
+Designed with HIPAA compliance and patient privacy as top priorities.
+
+---
+
+## 🔗 Quick Links
+
+- **Main Application**: `/claim-web-app/`
+- **API Documentation**: http://localhost:8000/docs
+- **Deployment Guide**: `/claim-web-app/DEPLOYMENT.md`
+- **Technical Summary**: `/claim-web-app/PROJECT_SUMMARY.md`
+
+---
+
+**To get started:** `cd claim-web-app && ./quick-start.sh`

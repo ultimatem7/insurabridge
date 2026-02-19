@@ -1,3 +1,12 @@
+# Electron
+dist/
+out/
+*.app
+*.exe
+*.dmg
+*.deb
+*.AppImage
+
 # Python
 __pycache__/
 *.py[cod]
@@ -6,55 +15,52 @@ __pycache__/
 .Python
 venv/
 env/
-.env
-*.egg-info/
-dist/
-build/
+ENV/
+.venv
 
 # Node
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+
+# Next.js
 .next/
 out/
-.npm
-*.tsbuildinfo
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-.DS_Store
-
-# Insurabridge data (contains PHI - never commit!)
-*.db
-*.sqlite
-*.db-journal
-audit.log
-chroma/
 
 # Logs
 *.log
 logs/
+/tmp/
 
-# Secrets
+# Environment
 .env
 .env.local
-.env.production
-secrets.json
+.env.development.local
+.env.test.local
+.env.production.local
 
 # OS
 .DS_Store
 Thumbs.db
-*.tmp
+*.swp
+*.swo
 
-# Testing
-.coverage
-htmlcov/
-.pytest_cache/
+# IDE
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
 
 # Build artifacts
-*.msi
-*.dmg
-*.deb
-*.rpm
+build/
+*.pyc
 
+# Insurabridge specific
+.insurabridge/

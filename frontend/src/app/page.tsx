@@ -32,6 +32,7 @@ import {
   Download,
 } from 'lucide-react'
 import { api } from '@/lib/api'
+import Header from '@/components/Header'
 
 // Types
 
@@ -578,11 +579,13 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Mode Indicator Overlay */}
-      {!useMockData && (
-        <div className="fixed top-0 left-0 right-0 h-1 bg-red-500 z-50 pointer-events-none" title="Live Mode Active" />
-      )}
+    <>
+      <Header />
+      <div className="flex h-screen overflow-hidden">
+        {/* Mode Indicator Overlay */}
+        {!useMockData && (
+          <div className="fixed top-0 left-0 right-0 h-1 bg-red-500 z-50 pointer-events-none" title="Live Mode Active" />
+        )}
 
       <Sidebar />
 
@@ -695,6 +698,7 @@ export default function Dashboard() {
         </div>
       </main>
     </div>
+    </>
   )
 }
 

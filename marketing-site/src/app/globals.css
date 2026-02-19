@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-white text-clinical-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-clinical-300 text-base font-medium rounded-lg text-clinical-700 bg-white hover:bg-clinical-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200;
+  }
+  
+  .btn-large {
+    @apply px-8 py-4 text-lg;
+  }
+  
+  .section-padding {
+    @apply py-16 lg:py-24;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .heading-1 {
+    @apply text-4xl lg:text-5xl xl:text-6xl font-bold text-clinical-900 leading-tight;
+  }
+  
+  .heading-2 {
+    @apply text-3xl lg:text-4xl font-bold text-clinical-900;
+  }
+  
+  .heading-3 {
+    @apply text-2xl lg:text-3xl font-bold text-clinical-900;
+  }
+  
+  .body-large {
+    @apply text-lg lg:text-xl text-clinical-600;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-clinical-200 p-6 lg:p-8 hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800;
+  }
+}

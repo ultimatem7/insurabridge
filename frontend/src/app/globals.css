@@ -4,22 +4,22 @@
 
 @layer base {
   :root {
-    /* Light theme - Clean, professional, inspired by Linear */
+    /* Light theme - Healthcare professional, matches marketing site */
     --background: 0 0% 100%;
-    --background-secondary: 210 20% 98%;
-    --background-tertiary: 210 20% 96%;
+    --background-secondary: 210 40% 98%;
+    --background-tertiary: 210 40% 96%;
     
-    --foreground: 220 20% 10%;
-    --foreground-secondary: 220 10% 30%;
-    --foreground-muted: 220 10% 50%;
+    --foreground: 222 47% 11%;
+    --foreground-secondary: 215 20% 40%;
+    --foreground-muted: 215 16% 47%;
     
-    --border: 220 10% 90%;
-    --border-secondary: 220 10% 85%;
+    --border: 214 32% 91%;
+    --border-secondary: 215 20% 85%;
     
-    --accent: 220 90% 56%;
+    --accent: 199 89% 48%;
     --accent-foreground: 0 0% 100%;
     
-    --success: 145 65% 42%;
+    --success: 142 71% 45%;
     --success-foreground: 0 0% 100%;
     
     --warning: 38 92% 50%;
